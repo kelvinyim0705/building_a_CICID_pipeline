@@ -67,6 +67,7 @@ First, you need to install some plugins in Jenkins to support integration with G
 - This helps Jenkins verify the user’s identity.
 ```
 ![Screenshot 2025-01-09 at 2 48 24 PM](https://github.com/user-attachments/assets/381b3c59-dbdb-4a12-957e-36b65eff9e19)
+
 4. Click `Generate Token`.
 ![Screenshot 2025-01-09 at 2 50 24 PM](https://github.com/user-attachments/assets/9ea7157d-53dc-45c8-9337-6aac77a25719)
 5. Copy the generated token immediately and store it securely. Once you leave this page, you will not be able to view it again.
@@ -106,3 +107,94 @@ First, you need to install some plugins in Jenkins to support integration with G
 3.	In the Build Triggers section, check the box for GitHub hook trigger for GITScm polling.
 4.	In the Build section, add the appropriate build steps, such as executing a shell script to install dependencies and run tests:
 ![Screenshot 2025-01-09 at 3 05 38 PM](https://github.com/user-attachments/assets/8c17cbfd-6171-4651-87cc-b77cec5402d3)
+
+
+# Dockerize a react app
+There two methods to dockerize a application, which are using Dockerfile and Docker Compose.
+
+## What is the difference of Docker file and Docker Compose?
+A Dockerfile is a text file that contains various of command to build a docker image. In this case, you can setup a Dockerfile with below commands:
+```docker
+From node:20
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . .	
+EXPOSE 5173
+CMD [ "npm", "start" ]
+```
+
+Once you created a Dockerfile, you can enter below commands to build and run a docker image.
+```bash
+docker build  -f Dockerfile -t personal-website .
+docker run -p 3000:3000 personal-website
+```
+
+A Docker Compose is a tools for defining and running multi-container Docker applications. We use a YAML file to define multiple services. In this case, you can setup a YAML with below commands:
+```docker
+version: '3'
+
+services:
+  personal-website:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm start"
+```
+
+Once you created a YAML file, you can enter below commands to build and run a docker image.
+```bash
+docker compose up
+```
+
+# Build a docker image using Jenkins
+## 1. Ensure Jenkins Has Access to Docker
+
+In order for Jenkins to execute Docker commands, you need to ensure that the Jenkins container has access to Docker.
+
+On Unraid, you can achieve this by mounting the Docker Unix socket (/var/run/docker.sock) to the Jenkins container.
+1.	Edit Jenkins Container Settings: Go to the Docker settings page in Unraid, find the Jenkins container, and click “Edit”.
+2.	Add Mount Point: In the “Add another Path, Port, Variable, Label or Device” section, click “Add another Path”.
+3.	Set Mount Point:
+- **Container Path**: `/var/run/docker.sock`
+- **Host Path**: `/var/run/docker.sock`
+- **Access Mode**: `Read/Write`
+```bash
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /usr/bin/docker:/usr/bin/docker \
+```
+<img width="1617" alt="Screenshot 2025-01-10 at 12 58 22 AM" src="https://github.com/user-attachments/assets/29aa11c2-415a-4725-a0c3-7b1349868d02" />
+
+## 2. Check Docker Socket Permissions
+```bash
+chmod 666 /var/run/docker.sock
+```
+> Please note that doing this may introduce security risks, as it grants Jenkins full control over the host’s Docker.
+> Therefore, make sure you trust all the code running in Jenkins jobs.
+
+
+## 3. Install Required Plugins in Jenkins
+Docker Pipeline Plugin: Allows the use of Docker functionality within Jenkins Pipelines.
+
+To install this plugin:
+- On the Jenkins homepage, click Manage Jenkins.
+- Select Manage Plugins.
+- In the Available tab, search for Docker Pipeline.
+- Check the plugin and then click Install without restart.
+<img width="1230" alt="Screenshot 2025-01-10 at 1 05 18 AM" src="https://github.com/user-attachments/assets/9fce8ac3-fe0d-40c4-b654-c03c6b424e79" />
+
+## 4. Add Docker Build and Docker Run Commands in Execute Shell
+To build and run a Docker container as part of your Jenkins job, you can add the following Docker commands to the Execute shell section:
+```bash
+docker build -t personal-website -f /config/workspace/personal-website/Dockerfile /config/workspace/personal-website
+docker run -d -p 5173:5173 --name my-first-website personal-website
+```
+<img width="1059" alt="Screenshot 2025-01-10 at 1 23 16 AM" src="https://github.com/user-attachments/assets/512dc0f7-b4be-4e3b-a7ba-d0fbd3eebc2b" />
+<img width="968" alt="Screenshot 2025-01-10 at 1 22 01 AM" src="https://github.com/user-attachments/assets/cb4f9ec9-bd3b-48fc-a1e8-c0bc7e398d5b" />
+<img width="1615" alt="Screenshot 2025-01-10 at 1 24 25 AM" src="https://github.com/user-attachments/assets/9773850c-2e8d-4b99-bd7f-aa54452a35ea"/>
+<img width="1077" alt="Screenshot 2025-01-10 at 1 25 03 AM" src="https://github.com/user-attachments/assets/7a0eaf0c-cea5-41ef-812d-2eb03752ea51" />
+
+
