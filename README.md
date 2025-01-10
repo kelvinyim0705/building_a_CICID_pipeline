@@ -1,4 +1,4 @@
-# What you can learn from building a CI/CD pipeline?
+# What can you gain from building a CI/CD Pipeline
 CI/CD pipelines are a modern way to improve the software development and deployment process.
 
 There are several development environments prior to rolling out into the production environment, each with distinct configuration files, such as SIT, UAT, and Staging. By automating the deployment process, CI/CD pipelines can prevent human errors, such as deploying incorrect configuration files or outdated application versions.
@@ -8,6 +8,13 @@ By reducing manual work, CI/CD accelerates the overall SDLC cycle. With automate
 The advantages of implementing CI/CD pipelines would have been significant in my previous roles. Below is an experiment I conducted with Jenkins to achieve an automated deployment process.
 
 <img width="1084" alt="Screenshot 2025-01-08 at 10 06 12 AM" src="https://github.com/user-attachments/assets/b3469cd4-2858-416f-8492-7df235bd46ff" />
+
+# Why Dockerising Applications is a Game-Changer
+Docker is a containerisation tool that allows us to build, package, and run applications in containers.
+
+Compared to traditional servers, containers are more lightweight. By sharing the host OS kernel, they are more efficient and faster than virtual machines. Furthermore, Docker’s platform-independent characteristics ensure applications run consistently across different environments, such as Windows desktops, cloud-based Linux servers, or Kubernetes clusters.
+
+When combined with Jenkins, the same Docker images can be used for both testing and production, ensuring a smooth and reliable transition across environments.
 
 # Setup github on your PC
 ```zsh
@@ -26,7 +33,6 @@ npm -v
 npx create-react-app persion-website
 ```
 
-## Available Scripts
 In the project directory, you can run:
 ```bash
 # Runs the app in the development mode.
