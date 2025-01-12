@@ -1,11 +1,11 @@
-# What can you gain from building a CI/CD Pipeline
-CI/CD pipelines are a modern way to improve the software development and deployment process.
+# What's good about CI/CD Pipeline?
+Building CI/CD pipelines is a modern way to improve the software development and deployment process.
 
-There are several development environments prior to rolling out into the production environment, each with distinct configuration files, such as SIT, UAT, and Staging. By automating the deployment process, CI/CD pipelines can prevent human errors, such as deploying incorrect configuration files or outdated application versions.
+There are several development environments prior to rolling out into the production environment, each with distinct configuration files, such as SIT, UAT, and Staging. By automating the deployment process, CI/CD pipelines can prevent human errors, like deploying incorrect configuration files or outdated application versions.
 
 By reducing manual work, CI/CD accelerates the overall SDLC cycle. With automated unit tests and regression testing built into the pipeline, developers can ensure their code is deployed as expected without altering the core logic of the application. Furthermore, combining CI/CD with Test-Driven Development (TDD) practices and agile project management decreases software delivery time and expedites the entire development cycle.
 
-The advantages of implementing CI/CD pipelines would have been significant in my previous roles. Below is an experiment I conducted with Jenkins to achieve an automated deployment process.
+The advantages of implementing CI/CD pipelines were significant in my previous roles. Below is an experiment I conducted with Jenkins to achieve an automated deployment process.
 
 <img width="1084" alt="Screenshot 2025-01-08 at 10 06 12 AM" src="https://github.com/user-attachments/assets/b3469cd4-2858-416f-8492-7df235bd46ff" />
 
@@ -124,7 +124,7 @@ First, you need to install some plugins in Jenkins to support integration with G
 ![Screenshot 2025-01-09 at 3 05 38 PM](https://github.com/user-attachments/assets/8c17cbfd-6171-4651-87cc-b77cec5402d3)
 
 # Dockerize a react app
-There two methods to dockerize a application, which are using Dockerfile and Docker Compose.
+There two methods to dockerize a application are using Dockerfile and Docker Compose.
 
 ## What is the difference of Docker file and Docker Compose?
 A Dockerfile is a text file that contains various of command to build a docker image. In this case, you can setup a Dockerfile with below commands:
