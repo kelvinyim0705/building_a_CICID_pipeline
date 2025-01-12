@@ -124,9 +124,9 @@ First, you need to install some plugins in Jenkins to support integration with G
 ![Screenshot 2025-01-09 at 3 05 38 PM](https://github.com/user-attachments/assets/8c17cbfd-6171-4651-87cc-b77cec5402d3)
 
 # Dockerize a react app
-There two methods to dockerize a application are using Dockerfile and Docker Compose.
+The two methods to dockerize an application are using Dockerfile and Docker Compose.
 
-## What is the difference of Docker file and Docker Compose?
+## What is the difference between Dockerfile and Docker Compose?
 A Dockerfile is a text file that contains various of command to build a docker image. In this case, you can setup a Dockerfile with below commands:
 ```docker
 From node:20
